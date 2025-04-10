@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grand Haven - Rooms</title>
+    <style>
+        :root {
+            --primary: #8B0000;
+            --secondary: #D4AF37;
+            --accent: #c70039;
+            --light: #FFF9F0;
+            --dark: #1A1A1A;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .video-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            opacity: 0.7;
+        }
+        
+        .header-container {
+            background: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0));
+            padding: 30px 0;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .header {
+            font-family: 'Playfair Display', serif;
+            font-size: 4.5rem;
+            font-weight: 700;
+            color: var(--light);
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+            letter-spacing: 1px;
+            margin: 0;
+            padding: 20px 0;
+            position: relative;
+        }
+        
+        .header::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 3px;
+            background: var(--secondary);
+            margin: 15px auto;
+        }
+        
+        .navbar {
+            background-color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 50px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 20px 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--secondary);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover::after {
+            width: 60%;
+        }
+        
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .nav-links a.active {
+            color: var(--secondary);
+        }
+        
+        .book-button {
+            background-color: var(--secondary);
+            color: var(--dark);
+            padding: 12px 25px;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .book-button:hover {
+            background-color: var(--light);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .room-container {
+            padding: 60px 20px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .room-box {
+            width: 80%;
+            background-color: var(--light);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            transition: transform 0.3s ease;
+        }
+        
+        .room-box:hover {
+            transform: translateY(-5px);
+        }
+        
+        .room-box img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 7px;
+            margin: 20px 0;
+        }
+        
+        .room-details h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--primary);
+            text-align: center;
+            margin: 0 0 20px 0;
+        }
+        
+        .room-info {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .info-section {
+            width: 100%;
+            padding-left: 20px;
+        }
+        
+        .book-now {
+            background-color: var(--secondary);
+            color: var(--dark);
+            padding: 12px 25px;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border: none;
+            cursor: pointer;
+        }
+        
+        .book-now:hover {
+            background-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0 20px;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .info-section {
+                width: 100%;
+                padding-left: 0;
+            }
+            
+            .room-info img {
+                width: 100%;
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <video autoplay muted loop class="video-bg">
+        <source src="new.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    
+    <div class="header-container">
+        <h1 class="header">Rooms & Suites</h1>
+    </div>
+    
+    <nav class="navbar">
+        <div class="nav-links">
+            <a href="Project.html">Home</a>
+            <a href="rooms.html" class="active">Rooms</a>
+            <a href="experience.html">Experience</a>
+            <a href="feedback.html">Feedback</a>
+            <a href="contact.html">Contact</a>
+        </div>
+        <a href="booking1.html" class="book-button">Book a Room</a>
+    </nav>
+    
+    <section class="room-container">
+        <div class="room-box">
+            <h3>Standard Room</h3>
+            <div class="room-info">
+                <img src="https://images.unsplash.com/photo-1664227430717-9a62112984cf?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Standard Room">
+                <div class="info-section">
+                    <p class="room-description">Cozy & inviting space with warm lighting & modern touches. Ideal for business travelers or weekend getaways with plush bedding & thoughtful amenities for a restful night.</p>
+                    <p><strong>Bed:</strong> Queen Size</p>
+                    <p class="price-tag"><strong>Price Range:</strong> ₹2,000 - ₹3,500</p>
+                    <button class="book-now" onclick="window.location.href='booking1.html'">Reserve Now</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="room-box">
+            <h3>Hollywood Twin Room</h3>
+            <div class="room-info">
+                <img src="https://images.unsplash.com/photo-1673687782286-674e29c9bf9e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Hollywood Twin Room">
+                <div class="info-section">
+                    <p class="room-description">Vibrant & functional space designed for sharing. These stylish rooms feature two comfortable beds with just enough personal space - perfect for friends exploring the city together!</p>
+                    <p><strong>Bed:</strong> Two Twin Beds</p>
+                    <p class="price-tag"><strong>Price Range:</strong> ₹2,500 - ₹4,000</p>
+                    <button class="book-now" onclick="window.location.href='booking1.html'">Reserve Now</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="room-box">
+            <h3>Deluxe Room</h3>
+            <div class="room-info">
+                <img src="https://plus.unsplash.com/premium_photo-1661963239507-7bdf41a5e66b?q=80&w=2023&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Deluxe Room">
+                <div class="info-section">
+                    <p class="room-description">Step up to luxury with our spacious deluxe offering. Enjoy premium furnishings, increased space & upgraded bathroom facilities - all designed with your ultimate comfort in mind.</p>
+                    <p><strong>Bed:</strong> King Size</p>
+                    <p class="price-tag"><strong>Price Range:</strong> ₹4,000 - ₹6,000</p>
+                    <button class="book-now" onclick="window.location.href='booking1.html'">Reserve Now</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="room-box">
+            <h3>Suite Room</h3>
+            <div class="room-info">
+                <img src="https://images.unsplash.com/photo-1647336811715-d7c7837c50d9?q=80&w=2060&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Suite Room">
+                <div class="info-section">
+                    <p class="room-description">Indulge in refined elegance with separate living & sleeping areas. Our suites blend sophistication with homely comfort, featuring premium amenities & picture-perfect views.</p>
+                    <p><strong>Bed:</strong> King Size</p>
+                    <p class="price-tag"><strong>Price Range:</strong> ₹6,000 - ₹10,000</p>
+                    <button class="book-now" onclick="window.location.href='booking1.html'">Reserve Now</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="room-box">
+            <h3>Penthouse Suite</h3>
+            <div class="room-info">
+                <img src="https://images.unsplash.com/photo-1702411200201-3061d0eea802?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Penthouse Suite">
+                <div class="info-section">
+                    <p class="room-description">Experience the pinnacle of luxury atop our hotel. This exclusive space offers breathtaking panoramas, bespoke furnishings & personalized service that redefines what a hotel stay can be.</p>
+                    <p><strong>Bed:</strong> King Size</p>
+                    <p class="price-tag"><strong>Price Range:</strong> ₹10,000 - ₹15,000</p>
+                    <button class="book-now" onclick="window.location.href='booking1.html'">Reserve Now</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="room-box">
+            <h3>Family Room</h3>
+            <div class="room-info">
+                <img src="https://media.cntraveler.com/photos/65398bcb3f54a421fea6493c/16:9/w_2580,c_limit/The%20Landmark-london-june22-pr-global.jpeg" alt="Family Room">
+                <div class="info-section">
+                    <p class="room-description">Thoughtfully designed with families in mind. Spacious layout with two comfortable queen beds provides ample room for everyone, with family-friendly touches throughout.</p>
+                    <p><strong>Bed:</strong> Two Queen Beds</p>
+                    <p class="price-tag"><strong>Price Range:</strong> ₹5,000 - ₹7,500</p>
+                    <button class="book-now" onclick="window.location.href='booking1.html'">Reserve Now</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="room-box">
+            <h3>Connecting Room</h3>
+            <div class="room-info">
+                <img src="https://www.keizershof-hotel.com/wp-content/uploads/2018/05/Connecting.jpg" alt="Connecting Room">
+                <div class="info-section">
+                    <p class="room-description">Perfect balance of togetherness & privacy with two adjoining spaces linked by a private door. Ideal for families or groups wanting proximity while maintaining personal space.</p>
+                    <p><strong>Bed:</strong> King & Twin Combination</p>
+                    <p class="price-tag"><strong>Price Range:</strong> ₹5,500 - ₹8,000</p>
+                    <button class="book-now" onclick="window.location.href='booking1.html'">Reserve Now</button>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

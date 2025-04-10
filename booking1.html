@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amrita Hotel | Booking</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #8B0000;
+            --secondary: #D4AF37;
+            --accent: #c70039;
+            --light: #FFF9F0;
+            --dark: #1A1A1A;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--dark);
+            line-height: 1.6;
+            background-color: #f9f5f0;
+        }
+        
+        .video-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            opacity: 0.3;
+        }
+        
+        .back-button {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            color: var(--primary);
+            font-size: 1.2rem;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 10;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 8px 15px;
+            border-radius: 30px;
+            font-weight: 600;
+        }
+        
+        .back-button:hover {
+            color: var(--secondary);
+            transform: translateX(-3px);
+        }
+        
+        .header-container {
+            background: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0));
+            padding: 50px 0 30px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+            letter-spacing: 1px;
+            margin: 0;
+            padding: 20px 0;
+            position: relative;
+        }
+        
+        .header::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 3px;
+            background: var(--secondary);
+            margin: 15px auto;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+        }
+        
+        .booking-form {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 50px;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 2px;
+            background: var(--secondary);
+            margin: 15px 0 25px;
+        }
+        
+        .form-group {
+            position: relative;
+            margin-bottom: 30px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background-color: rgba(255,255,255,0.8);
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.3);
+        }
+        
+        .date-picker {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .room-selections {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .room-selection {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .payment-options {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .payment-option {
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            flex: 1;
+            text-align: center;
+            transition: all 0.3s ease;
+            background-color: rgba(255,255,255,0.8);
+        }
+        
+        .payment-option:hover {
+            border-color: var(--secondary);
+        }
+        
+        .payment-option.selected {
+            border-color: var(--primary);
+            background-color: rgba(139, 0, 0, 0.05);
+            box-shadow: 0 0 0 1px var(--primary);
+        }
+        
+        .payment-option i {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .payment-option span {
+            display: block;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .payment-details {
+            background: rgba(255,255,255,0.8);
+            padding: 20px;
+            border-radius: 4px;
+            margin-top: 15px;
+            border: 1px solid #eee;
+        }
+        
+        .button-container {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            box-shadow: 0 4px 15px rgba(139, 0, 0, 0.3);
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 0, 0, 0.4);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+        
+        .btn-secondary:hover {
+            background-color: rgba(139, 0, 0, 0.1);
+        }
+        
+        .error {
+            color: #dc3545;
+            margin-top: 8px;
+            font-size: 0.9em;
+        }
+        
+        .success {
+            color: #28a745;
+            margin-top: 8px;
+            font-size: 0.9em;
+        }
+        
+        .validation-error {
+            color: #dc3545;
+            font-size: 0.85em;
+            margin-top: 8px;
+        }
+        
+        .valid {
+            border-color: #28a745;
+        }
+        
+        .invalid {
+            border-color: #dc3545;
+        }
+        
+        .price-display {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--primary);
+            text-align: right;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .price-display span {
+            font-weight: 700;
+            color: var(--accent);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .booking-form {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                font-size: 2.5rem;
+            }
+            
+            .booking-form {
+                padding: 30px;
+            }
+            
+            .date-picker {
+                grid-template-columns: 1fr;
+            }
+            
+            .payment-options {
+                flex-direction: column;
+            }
+            
+            .room-selection {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .header {
+                font-size: 2rem;
+            }
+            
+            .booking-form {
+                padding: 20px 15px;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .button-container {
+                flex-direction: column;
+            }
+            
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <video autoplay muted loop class="video-bg">
+        <source src="new.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    
+    <a href="Project.html" class="back-button">
+        <i class="fas fa-arrow-left"></i>
+        Back
+    </a>
+    
+    <div class="header-container">
+        <h1 class="header">Reserve Your Stay</h1>
+    </div>
+    
+    <div class="container">
+        <div class="booking-form">
+            <div class="form-group">
+                <h3 class="section-title">Your Stay Dates</h3>
+                <div class="date-picker">
+                    <div>
+                        <label for="checkIn">Check-in Date</label>
+                        <input type="date" id="checkIn" required>
+                        <div id="checkInError" class="validation-error"></div>
+                    </div>
+                    <div>
+                        <label for="checkOut">Check-out Date</label>
+                        <input type="date" id="checkOut" required>
+                        <div id="checkOutError" class="validation-error"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <h3 class="section-title">Room Selection</h3>
+                <div class="room-selections">
+                    <div class="room-selection">
+                        <select id="room1" required>
+                            <option value="">Select Room Type</option>
+                            <option value="Standard Room">Standard Room (₹2,000 - ₹3,500)</option>
+                            <option value="Hollywood Twin Room">Hollywood Twin Room (₹2,500 - ₹4,000)</option>
+                            <option value="Deluxe Room">Deluxe Room (₹4,000 - ₹6,000)</option>
+                            <option value="Suite Room">Suite Room (₹6,000 - ₹10,000)</option>
+                            <option value="Family Room">Family Room</option>
+                            <option value="Connecting Room">Connecting Room</option>
+                        </select>
+                        <input type="number" id="room1Quantity" min="1" max="3" value="1" required>
+                    </div>
+
+                    <div class="room-selection">
+                        <select id="room2" required>
+                            <option value="">Select Room Type</option>
+                            <option value="Standard Room">Standard Room (₹2,000 - ₹3,500)</option>
+                            <option value="Hollywood Twin Room">Hollywood Twin Room (₹2,500 - ₹4,000)</option>
+                            <option value="Deluxe Room">Deluxe Room (₹4,000 - ₹6,000)</option>
+                            <option value="Suite Room">Suite Room (₹6,000 - ₹10,000)</option>
+                            <option value="Family Room">Family Room</option>
+                            <option value="Connecting Room">Connecting Room</option>
+                        </select>
+                        <input type="number" id="room2Quantity" min="1" max="3" value="1" required>
+                    </div>
+
+                    <div class="room-selection">
+                        <select id="room3" required>
+                            <option value="">Select Room Type</option>
+                            <option value="Standard Room">Standard Room (₹2,000 - ₹3,500)</option>
+                            <option value="Hollywood Twin Room">Hollywood Twin Room (₹2,500 - ₹4,000)</option>
+                            <option value="Deluxe Room">Deluxe Room (₹4,000 - ₹6,000)</option>
+                            <option value="Suite Room">Suite Room (₹6,000 - ₹10,000)</option>
+                            <option value="Family Room">Family Room</option>
+                            <option value="Connecting Room">Connecting Room</option>
+                        </select>
+                        <input type="number" id="room3Quantity" min="1" max="3" value="1" required>
+                    </div>
+                </div>
+                <div id="roomValidation" class="validation-error"></div>
+                <div class="price-display">
+                    Total Price: <span id="totalPrice">₹0</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <h3 class="section-title">Personal Details</h3>
+                <div>
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" onblur="validateName()" required>
+                    <div id="nameError" class="validation-error"></div>
+                </div>
+                <div>
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" onblur="validatePhone()" required>
+                    <div id="phoneError" class="validation-error"></div>
+                </div>
+                <div>
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" onblur="validateEmail()" required>
+                    <div id="emailError" class="validation-error"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <h3 class="section-title">Payment Method</h3>
+                <div class="payment-options">
+                    <div class="payment-option" onclick="selectPaymentMethod('upi')">
+                        <i class="fas fa-mobile-alt"></i>
+                        <span>UPI ID</span>
+                    </div>
+                    <div class="payment-option" onclick="selectPaymentMethod('cash')">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <span>Cash</span>
+                    </div>
+                </div>
+
+                <div id="upiDetails" class="payment-details" style="display: none;">
+                    <h4>UPI Payment Details</h4>
+                    <div>
+                        <label for="upiId">UPI ID</label>
+                        <input type="text" id="upiId" onblur="validateUPI()" required>
+                        <div id="upiError" class="validation-error"></div>
+                    </div>
+                </div>
+
+                <div id="cashDetails" class="payment-details" style="display: none;">
+                    <p>You can pay in cash when you arrive at the hotel.</p>
+                </div>
+            </div>
+
+            <div class="button-container">
+                <button class="btn-secondary" onclick="resetForm()">Reset</button>
+                <button class="btn-primary" onclick="submitBooking()">Confirm Booking</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedPaymentMethod = null;
+
+        function selectPaymentMethod(method) {
+            const options = document.querySelectorAll('.payment-option');
+            options.forEach(option => option.classList.remove('selected'));
+            
+            const selectedOption = document.querySelector(`.payment-option[onclick*="${method}"]`);
+            selectedOption.classList.add('selected');
+            
+            const details = document.querySelectorAll('.payment-details');
+            details.forEach(detail => detail.style.display = 'none');
+            
+            const detailDiv = document.getElementById(`${method}Details`);
+            if (detailDiv) {
+                detailDiv.style.display = 'block';
+            }
+            
+            selectedPaymentMethod = method;
+        }
+
+        function validateName() {
+            const name = document.getElementById('name').value.trim();
+            const nameError = document.getElementById('nameError');
+            const nameInput = document.getElementById('name');
+
+            if (!name) {
+                nameError.textContent = 'Name is required';
+                nameInput.classList.add('invalid');
+                return false;
+            }
+
+            if (name.length < 2) {
+                nameError.textContent = 'Name must be at least 2 characters long';
+                nameInput.classList.add('invalid');
+                return false;
+            }
+
+            if (!/^[a-zA-Z\s]+$/.test(name)) {
+                nameError.textContent = 'Name can only contain letters and spaces';
+                nameInput.classList.add('invalid');
+                return false;
+            }
+
+            nameError.textContent = '';
+            nameInput.classList.remove('invalid');
+            nameInput.classList.add('valid');
+            return true;
+        }
+
+        function validatePhone() {
+            const phone = document.getElementById('phone').value.trim();
+            const phoneError = document.getElementById('phoneError');
+            const phoneInput = document.getElementById('phone');
+
+            if (!phone) {
+                phoneError.textContent = 'Phone number is required';
+                phoneInput.classList.add('invalid');
+                return false;
+            }
+
+            if (!/^[0-9]{10}$/.test(phone)) {
+                phoneError.textContent = 'Please enter a valid 10-digit phone number';
+                phoneInput.classList.add('invalid');
+                return false;
+            }
+
+            phoneError.textContent = '';
+            phoneInput.classList.remove('invalid');
+            phoneInput.classList.add('valid');
+            return true;
+        }
+
+        function validateEmail() {
+            const email = document.getElementById('email').value.trim();
+            const emailError = document.getElementById('emailError');
+            const emailInput = document.getElementById('email');
+
+            if (!email) {
+                emailError.textContent = 'Email is required';
+                emailInput.classList.add('invalid');
+                return false;
+            }
+
+            if (!/^\S+@\S+\.\S+$/.test(email)) {
+                emailError.textContent = 'Please enter a valid email address';
+                emailInput.classList.add('invalid');
+                return false;
+            }
+
+            emailError.textContent = '';
+            emailInput.classList.remove('invalid');
+            emailInput.classList.add('valid');
+            return true;
+        }
+
+        function validateDates() {
+            const checkIn = document.getElementById('checkIn').value;
+            const checkOut = document.getElementById('checkOut').value;
+            const checkInError = document.getElementById('checkInError');
+            const checkOutError = document.getElementById('checkOutError');
+            const checkInInput = document.getElementById('checkIn');
+            const checkOutInput = document.getElementById('checkOut');
+
+            if (!checkIn) {
+                checkInError.textContent = 'Check-in date is required';
+                checkInInput.classList.add('invalid');
+                return false;
+            }
+
+            if (!checkOut) {
+                checkOutError.textContent = 'Check-out date is required';
+                checkOutInput.classList.add('invalid');
+                return false;
+            }
+
+            const today = new Date();
+            const checkInDate = new Date(checkIn);
+            const checkOutDate = new Date(checkOut);
+
+            if (checkInDate < today) {
+                checkInError.textContent = 'Check-in date cannot be in the past';
+                checkInInput.classList.add('invalid');
+                return false;
+            }
+
+            if (checkOutDate <= checkInDate) {
+                checkOutError.textContent = 'Check-out date must be after check-in date';
+                checkOutInput.classList.add('invalid');
+                return false;
+            }
+
+            checkInError.textContent = '';
+            checkOutError.textContent = '';
+            checkInInput.classList.remove('invalid');
+            checkOutInput.classList.remove('invalid');
+            checkInInput.classList.add('valid');
+            checkOutInput.classList.add('valid');
+            return true;
+        }
+
+        function validateRoomSelection() {
+            let totalRooms = 0;
+            const roomValidation = document.getElementById('roomValidation');
+            const roomInputs = document.querySelectorAll('select[id^="room"]').length;
+            let validRooms = 0;
+
+            for (let i = 1; i <= 3; i++) {
+                const roomId = `room${i}`;
+                const roomSelect = document.getElementById(roomId);
+                const quantity = parseInt(document.getElementById(`${roomId}Quantity`).value);
+                const quantityInput = document.getElementById(`${roomId}Quantity`);
+
+                if (roomSelect.value && quantity > 0) {
+                    validRooms++;
+                    totalRooms += quantity;
+                }
+
+                if (quantity < 1 || quantity > 3) {
+                    quantityInput.classList.add('invalid');
+                    roomValidation.textContent = 'Quantity must be between 1 and 3';
+                    return false;
+                }
+            }
+
+            if (totalRooms > 3) {
+                roomValidation.textContent = 'Maximum total rooms allowed is 3';
+                return false;
+            }
+
+            if (validRooms === 0) {
+                roomValidation.textContent = 'Please select at least one room';
+                return false;
+            }
+
+            roomValidation.textContent = '';
+            return true;
+        }
+
+        function validateUPI() {
+            const upiId = document.getElementById('upiId').value.trim();
+            const upiError = document.getElementById('upiError');
+            const upiInput = document.getElementById('upiId');
+
+            if (!upiId) {
+                upiError.textContent = 'UPI ID is required';
+                upiInput.classList.add('invalid');
+                return false;
+            }
+
+            const upiPattern = /^[a-zA-Z0-9.-]+@[a-zA-Z0-9.-]+$/;
+            if (!upiPattern.test(upiId)) {
+                upiError.textContent = 'Please enter a valid UPI ID (e.g., abc123@xyz)';
+                upiInput.classList.add('invalid');
+                return false;
+            }
+
+            upiError.textContent = '';
+            upiInput.classList.remove('invalid');
+            upiInput.classList.add('valid');
+            return true;
+        }
+
+        
+        const roomPrices = {
+            'Standard Room': 2000,
+            'Hollywood Twin Room': 2500,
+            'Deluxe Room': 4000,
+            'Suite Room': 6000
+        };
+
+        function calculateTotalPrice() {
+            let totalPrice = 0;
+            const checkIn = document.getElementById('checkIn').value;
+            const checkOut = document.getElementById('checkOut').value;
+            
+            if (!checkIn || !checkOut) return totalPrice;
+
+            
+            const checkInDate = new Date(checkIn);
+            const checkOutDate = new Date(checkOut);
+            const days = Math.ceil((checkOutDate - checkInDate) / (1000 * 60 * 60 * 24));
+
+            
+            for (let i = 1; i <= 3; i++) {
+                const roomId = `room${i}`;
+                const roomSelect = document.getElementById(roomId);
+                const quantity = parseInt(document.getElementById(`${roomId}Quantity`).value);
+                
+                if (roomSelect.value && quantity > 0) {
+                    const roomPrice = roomPrices[roomSelect.value] || 0;
+                    totalPrice += roomPrice * quantity * days;
+                }
+            }
+
+            document.getElementById('totalPrice').textContent = `₹${totalPrice.toLocaleString()}`;
+            return totalPrice;
+        }
+
+        
+        document.querySelectorAll('select[id^="room"], input[type="number"]').forEach(element => {
+            element.addEventListener('change', calculateTotalPrice);
+        });
+
+        
+        document.querySelectorAll('input[type="date"]').forEach(element => {
+            element.addEventListener('change', calculateTotalPrice);
+        });
+
+        function validateForm() {
+            let isValid = true;
+
+           
+            if (!validateDates()) isValid = false;
+
+            
+            if (!validateRoomSelection()) isValid = false;
+
+          
+            if (!validateName()) isValid = false;
+            if (!validatePhone()) isValid = false;
+            if (!validateEmail()) isValid = false;
+
+            
+            if (!selectedPaymentMethod) {
+                alert('Please select a payment method');
+                isValid = false;
+            }
+
+            
+            if (selectedPaymentMethod === 'upi' && !validateUPI()) {
+                isValid = false;
+            }
+
+            
+            const totalPrice = calculateTotalPrice();
+            if (totalPrice === 0) {
+                alert('Please select at least one room');
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('blur', function() {
+                const id = this.id;
+                switch (id) {
+                    case 'name':
+                        validateName();
+                        break;
+                    case 'phone':
+                        validatePhone();
+                        break;
+                    case 'email':
+                        validateEmail();
+                        break;
+                }
+            });
+        });
+
+        document.querySelectorAll('input[type="number"]').forEach(input => {
+            input.addEventListener('change', function() {
+                validateRoomSelection();
+            });
+        });
+
+        document.querySelectorAll('input[type="date"]').forEach(input => {
+            input.addEventListener('change', function() {
+                validateDates();
+            });
+        });
+
+        document.getElementById('upiId').addEventListener('blur', function() {
+            validateUPI();
+        });
+
+        function resetForm() {
+            document.querySelectorAll('input, select').forEach(element => {
+                element.value = '';
+                element.classList.remove('valid', 'invalid');
+            });
+            document.getElementById('roomValidation').textContent = '';
+            document.querySelectorAll('.payment-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            document.querySelectorAll('.payment-details').forEach(detail => {
+                detail.style.display = 'none';
+            });
+            document.getElementById('totalPrice').textContent = '₹0';
+            selectedPaymentMethod = null;
+        }
+
+        function submitBooking() {
+            if (!validateForm()) return;
+
+            const totalPrice = calculateTotalPrice();
+            const bookingData = {
+                checkIn: document.getElementById('checkIn').value,
+                checkOut: document.getElementById('checkOut').value,
+                rooms: [],
+                personal: {
+                    name: document.getElementById('name').value,
+                    phone: document.getElementById('phone').value,
+                    email: document.getElementById('email').value
+                },
+                payment: {
+                    method: selectedPaymentMethod
+                },
+                totalPrice: totalPrice
+            };
+
+            
+            for (let i = 1; i <= 3; i++) {
+                const roomId = `room${i}`;
+                const roomSelect = document.getElementById(roomId);
+                const quantity = parseInt(document.getElementById(`${roomId}Quantity`).value);
+                
+                if (roomSelect.value && quantity > 0) {
+                    bookingData.rooms.push({
+                        type: roomSelect.value,
+                        quantity: quantity,
+                        price: roomPrices[roomSelect.value],
+                        total: roomPrices[roomSelect.value] * quantity
+                    });
+                }
+            }
+
+            
+            if (selectedPaymentMethod === 'upi') {
+                bookingData.payment.details = {
+                    upiId: document.getElementById('upiId').value
+                };
+            }
+
+            
+            window.location.href = `bill.html?data=${encodeURIComponent(JSON.stringify(bookingData))}`;
+        }
+
+        
+        selectPaymentMethod('upi');
+    </script>
+</body>
+</html>

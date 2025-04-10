@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amrita Hotel - Experience</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <style>
+        :root {
+            --primary: #8B0000;
+            --secondary: #D4AF37;
+            --accent: #c70039;
+            --light: #FFF9F0;
+            --dark: #1A1A1A;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .video-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            opacity: 0.7;
+        }
+        
+        .header-container {
+            background: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0));
+            padding: 30px 0;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .header {
+            font-family: 'Playfair Display', serif;
+            font-size: 4.5rem;
+            font-weight: 700;
+            color: var(--light);
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+            letter-spacing: 1px;
+            margin: 0;
+            padding: 20px 0;
+            position: relative;
+        }
+        
+        .header::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 3px;
+            background: var(--secondary);
+            margin: 15px auto;
+        }
+        
+        .navbar {
+            background-color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 50px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 20px 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--secondary);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover::after {
+            width: 60%;
+        }
+        
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .book-button {
+            background-color: var(--secondary);
+            color: var(--dark);
+            padding: 12px 25px;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .book-button:hover {
+            background-color: var(--light);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        main {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .card {
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(139, 0, 0, 0.1);
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card i {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+        
+        .card h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .card p {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--dark);
+        }
+        
+        footer {
+            background-color: var(--primary);
+            color: var(--light);
+            padding: 40px 0;
+            margin-top: 60px;
+        }
+        
+        footer p {
+            font-size: 0.9rem;
+            margin: 0 auto;
+            max-width: 800px;
+            text-align: center;
+        }
+        
+        .logo {
+            display: block;
+            margin: 0 auto;
+            width: 120px;
+            filter: drop-shadow(0 0 10px rgba(0,0,0,0.5));
+            margin-bottom: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                padding: 15px;
+            }
+            
+            .nav-links {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .header {
+                font-size: 3rem;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+            
+            .card h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <video autoplay muted loop class="video-bg">
+        <source src="new.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    
+    <div class="header-container">
+        <h1 class="header">Experience Amrita</h1>
+    </div>
+    
+    <div class="navbar">
+        <div class="nav-links">
+            <a href="Project.html">Home</a>
+            <a href="rooms.html">Rooms</a>
+            <a href="experience.html">Experience</a>
+            <a href="feedback.html">Feedback</a>
+            <a href="contact.html">Contact Us</a>
+        </div>
+        <a href="booking1.html" class="book-button">Book a Room</a>
+    </div>
+    
+    <main>
+        <a  class="card">
+            <i class="fas fa-hotel"></i>
+            <h2>Staying With Us</h2>
+            <p>Immerse yourself in refined comfort, attentive hospitality, and timeless elegance from the moment you step in. Every room is a sanctuary, every detail carefully curated.</p>
+        </a>
+
+        <a href="restaurant.html" class="card">
+            <i class="fas fa-utensils"></i>
+            <h2>Cuisine</h2>
+            <p>Indulge in culinary excellence with flavors from around the world. Our award-winning chefs serve both international delicacies and local favorites in stunning dining venues.</p>
+        </a>
+
+        <a href="rooms.html" class="card">
+            <i class="fas fa-bed"></i>
+            <h2>Rooms & Suites</h2>
+            <p>From deluxe rooms to royal suites, enjoy stunning interiors, skyline views, smart features, and plush bedding designed for pure relaxation.</p>
+        </a>
+
+        <a href="spa.html" class="card">
+            <i class="fas fa-spa"></i>
+            <h2>Spa & Wellness</h2>
+            <p>Find your inner peace in our tranquil spa, offering massage therapies, aromatherapy, saunas, and wellness rituals tailored to your body and mind.</p>
+        </a>
+
+        <a href="sightseeing.html" class="card">
+            <i class="fas fa-camera"></i>
+            <h2>Tour Guide</h2>
+            <p>Make memories and explore popular places just minutes away from Grand Haven.</p>
+        </a>
+
+        <a href="Bars.html" class="card">
+            <i class="fas fa-cocktail"></i>
+            <h2>Bars & Lounges</h2>
+            <p>Sip handcrafted cocktails and vintage wines in our chic lounges. Perfect for a casual evening or an elegant night out under the stars.</p>
+        </a>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Amrita Hotel. All rights reserved.</p>
+    </footer>
+</body>
+</html>

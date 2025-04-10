@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmation | Amrita Hotel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #8B0000;
+            --secondary: #D4AF37;
+            --accent: #c70039;
+            --light: #FFF9F0;
+            --dark: #1A1A1A;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--dark);
+            line-height: 1.6;
+            background-color: #f9f5f0;
+        }
+        
+        .video-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            opacity: 0.3;
+        }
+        
+        .back-button {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            color: var(--primary);
+            font-size: 1.2rem;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 10;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 8px 15px;
+            border-radius: 30px;
+            font-weight: 600;
+        }
+        
+        .back-button:hover {
+            color: var(--secondary);
+            transform: translateX(-3px);
+        }
+        
+        .header-container {
+            background: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0));
+            padding: 50px 0 30px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+            letter-spacing: 1px;
+            margin: 0;
+            padding: 20px 0;
+            position: relative;
+        }
+        
+        .header::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 3px;
+            background: var(--secondary);
+            margin: 15px auto;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+        }
+        
+        .confirmation-box {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 50px;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 2px;
+            background: var(--secondary);
+            margin: 15px 0 25px;
+        }
+        
+        .customer-info {
+            margin-bottom: 30px;
+            border-bottom: 2px solid rgba(139, 0, 0, 0.1);
+            padding-bottom: 20px;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .info-item {
+            margin-bottom: 15px;
+        }
+        
+        .info-label {
+            font-weight: 600;
+            color: var(--primary);
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .info-value {
+            color: var(--dark);
+            font-size: 1.1rem;
+        }
+        
+        .bill-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+        }
+        
+        .bill-table th,
+        .bill-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(139, 0, 0, 0.1);
+        }
+        
+        .bill-table th {
+            background-color: rgba(139, 0, 0, 0.05);
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .total-row {
+            font-weight: bold;
+            border-top: 2px solid rgba(139, 0, 0, 0.2);
+            background-color: rgba(139, 0, 0, 0.03);
+        }
+        
+        .price-cell {
+            font-family: 'Courier New', monospace;
+            text-align: right;
+        }
+        
+        .summary-section {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid rgba(139, 0, 0, 0.1);
+        }
+        
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .summary-item {
+            margin-bottom: 15px;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(139, 0, 0, 0.1);
+            color: var(--dark);
+        }
+        
+        .print-button {
+            display: block;
+            margin: 30px auto 0;
+            padding: 12px 25px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(139, 0, 0, 0.3);
+            text-decoration: none;
+            text-align: center;
+            width: fit-content;
+        }
+        
+        .print-button:hover {
+            background-color: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 0, 0, 0.4);
+        }
+        
+        @media print {
+            .print-button, .back-button {
+                display: none;
+            }
+            .confirmation-box {
+                box-shadow: none;
+                border: none;
+                background: white;
+                padding: 0;
+            }
+            body {
+                background: white;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                font-size: 2.5rem;
+            }
+            
+            .confirmation-box {
+                padding: 30px;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .bill-table th,
+            .bill-table td {
+                padding: 10px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <video autoplay muted loop class="video-bg">
+        <source src="new.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    
+    <a href="Project.html" class="back-button">
+        <i class="fas fa-arrow-left"></i>
+        Back to Home
+    </a>
+    
+    <div class="header-container">
+        <h1 class="header">Booking Confirmed</h1>
+    </div>
+    
+    <div class="container">
+        <div class="confirmation-box">
+            <div class="customer-info">
+                <h3 class="section-title">Guest Information</h3>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="info-label">Guest Name</span>
+                        <span class="info-value" id="customerName"></span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Email</span>
+                        <span class="info-value" id="customerEmail"></span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Phone</span>
+                        <span class="info-value" id="customerPhone"></span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Booking Reference</span>
+                        <span class="info-value" id="bookingRef"></span>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="section-title">Bill Summary</h3>
+            <table class="bill-table">
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody id="billItems"></tbody>
+                <tfoot>
+                    <tr class="total-row">
+                        <td colspan="3">Subtotal</td>
+                        <td class="price-cell" id="subtotalAmount"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">Taxes & Fees (18%)</td>
+                        <td class="price-cell" id="taxAmount"></td>
+                    </tr>
+                    <tr class="total-row">
+                        <td colspan="3">Total Amount</td>
+                        <td class="price-cell" id="totalAmount"></td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <div class="summary-section">
+                <h3 class="section-title">Stay Details</h3>
+                <div class="summary-grid">
+                    <div class="summary-item">
+                        <span class="info-label">Check-in Date</span>
+                        <span class="info-value" id="checkInDate"></span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="info-label">Check-out Date</span>
+                        <span class="info-value" id="checkOutDate"></span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="info-label">Duration</span>
+                        <span class="info-value" id="nightsCount"></span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="info-label">Payment Method</span>
+                        <span class="info-value" id="paymentMethod"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer">
+                <p>Thank you for choosing Amrita Hotel!</p>
+                <p>For any assistance, please contact our concierge at <strong>+91 80 1234 5678</strong></p>
+            </div>
+
+            <button onclick="window.print()" class="print-button">
+                <i class="fas fa-print"></i> Print Confirmation
+            </button>
+        </div>
+    </div>
+
+    <script>
+        
+        const urlParams = new URLSearchParams(window.location.search);
+        const bookingData = JSON.parse(decodeURIComponent(urlParams.get('data'))) || {};
+
+       
+        function generateBookingRef() {
+            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+            let result = '';
+            for (let i = 0; i < 6; i++) {
+                result += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return `AMR-${result}`;
+        }
+
+       
+        function formatDate(dateString) {
+            if (!dateString) return 'Not specified';
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString('en-IN', options);
+        }
+
+       
+        function calculateNights(checkIn, checkOut) {
+            if (!checkIn || !checkOut) return 0;
+            const diffTime = new Date(checkOut) - new Date(checkIn);
+            return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        }
+
+       
+        function calculateBillSummary(rooms, nights) {
+            let subtotal = 0;
+            
+           
+            const roomCharges = rooms.map(room => {
+                const roomTotal = room.price * room.quantity * nights;
+                subtotal += roomTotal;
+                return {
+                    ...room,
+                    total: roomTotal
+                };
+            });
+
+          
+            const taxRate = 0.18;
+            const tax = subtotal * taxRate;
+            const total = subtotal + tax;
+
+            return {
+                roomCharges,
+                subtotal,
+                tax,
+                total
+            };
+        }
+
+       
+        function displayBookingInfo() {
+            const bookingRef = generateBookingRef();
+            const nights = calculateNights(bookingData.checkIn, bookingData.checkOut);
+            const billSummary = calculateBillSummary(bookingData.rooms || [], nights);
+
+            
+            document.getElementById('customerName').textContent = bookingData.personal?.name || 'Not provided';
+            document.getElementById('customerEmail').textContent = bookingData.personal?.email || 'Not provided';
+            document.getElementById('customerPhone').textContent = bookingData.personal?.phone || 'Not provided';
+            document.getElementById('bookingRef').textContent = bookingRef;
+
+           
+            document.getElementById('checkInDate').textContent = formatDate(bookingData.checkIn);
+            document.getElementById('checkOutDate').textContent = formatDate(bookingData.checkOut);
+            document.getElementById('nightsCount').textContent = `${nights} night${nights !== 1 ? 's' : ''}`;
+
+            
+            let paymentMethod = 'Not specified';
+            if (bookingData.payment?.method === 'upi') {
+                paymentMethod = `UPI (ID: ${bookingData.payment?.details?.upiId || 'Not provided'})`;
+            } else if (bookingData.payment?.method === 'cash') {
+                paymentMethod = 'Cash (Pay at Hotel)';
+            }
+            document.getElementById('paymentMethod').textContent = paymentMethod;
+
+            
+            document.getElementById('subtotalAmount').textContent = `₹${billSummary.subtotal.toLocaleString('en-IN')}`;
+            document.getElementById('taxAmount').textContent = `₹${billSummary.tax.toLocaleString('en-IN')}`;
+            document.getElementById('totalAmount').textContent = `₹${billSummary.total.toLocaleString('en-IN')}`;
+
+            
+            const billItems = document.getElementById('billItems');
+            billItems.innerHTML = '';
+            
+            if (billSummary.roomCharges && billSummary.roomCharges.length > 0) {
+                billSummary.roomCharges.forEach(room => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${room.type} (${nights} night${nights !== 1 ? 's' : ''})</td>
+                        <td>${room.quantity}</td>
+                        <td class="price-cell">₹${room.price.toLocaleString('en-IN')}/night</td>
+                        <td class="price-cell">₹${room.total.toLocaleString('en-IN')}</td>
+                    `;
+                    billItems.appendChild(row);
+                });
+            } else {
+                const row = document.createElement('tr');
+                row.innerHTML = '<td colspan="4" style="text-align: center;">No room information available</td>';
+                billItems.appendChild(row);
+            }
+        }
+
+        
+        displayBookingInfo();
+    </script>
+</body>
+</html>

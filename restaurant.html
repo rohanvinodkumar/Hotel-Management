@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Restaurant Menu | Oceanview Hotel</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fdfdfd;
+      color: #333;
+    }
+
+    .back-button {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background-color: white;
+      color: #e63946;
+      padding: 10px 15px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s;
+      z-index: 1000;
+    }
+
+    .back-button:hover {
+      background-color: #f2f2f2;
+    }
+
+    header {
+      background: url('https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+      padding: 70px 20px;
+      text-align: center;
+      color: white;
+    }
+
+    header h1 {
+      font-size: 2.8rem;
+      margin-bottom: 10px;
+    }
+
+    .filters {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .filter-btn {
+      padding: 10px 20px;
+      margin: 5px;
+      border: none;
+      background-color: #e63946;
+      color: white;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      background-color: #d62828;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    }
+
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .card-content {
+      padding: 15px;
+    }
+
+    .card-content h3 {
+      margin: 0 0 5px;
+    }
+
+    .price {
+      font-weight: bold;
+      color: #e63946;
+      margin-bottom: 10px;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <a href="experience.html" class="back-button">← Back</a>
+
+  <header>
+    <h1>🍽️ Our Menu</h1>
+    <p>Delicious dishes crafted by our chefs</p>
+  </header>
+
+  <section class="filters">
+    <button class="filter-btn active" data-category="all">All</button>
+    <button class="filter-btn" data-category="breakfast">Breakfast</button>
+    <button class="filter-btn" data-category="dinner">Dinner</button>
+    <button class="filter-btn" data-category="drinks">Drinks</button>
+  </section>
+
+  <section class="menu-grid">
+    <div class="card breakfast">
+      <img src="https://www.allrecipes.com/thmb/dOTb-yf_t1CXgw91lg69Wvzrl8E=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/AR-162760-fluffy-pancakes-DDMFS-beauty-3x4-35d4b54b54464701b32870d4b1646bfe.jpg" alt="Pancakes">
+      <div class="card-content">
+        <h3>Fluffy Pancakes</h3>
+        <p class="price">₹199</p>
+        <p>Served with maple syrup and berries</p>
+      </div>
+    </div>
+
+    <div class="card breakfast">
+      <img src="https://www.seriouseats.com/thmb/TuOix8vfMlFnxZZCXHfYQKG8v2c=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/__opt__aboutcom__coeus__resources__content_migration__serious_eats__seriouseats.com__recipes__images__2016__04__20160418-american-omelet-ham-and-cheese-21-67641a326ac645ec81d03757a5478077.JPG" alt="Omelette">
+      <div class="card-content">
+        <h3>Cheese Omelette</h3>
+        <p class="price">₹149</p>
+        <p>Loaded with cheese and herbs</p>
+      </div>
+    </div>
+
+    <div class="card dinner">
+      <img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=800&q=80" alt="Steak">
+      <div class="card-content">
+        <h3>Grilled Steak</h3>
+        <p class="price">₹499</p>
+        <p>Juicy tenderloin with garlic butter</p>
+      </div>
+    </div>
+
+    <div class="card dinner">
+      <img src="https://cdn.apartmenttherapy.info/image/upload/f_jpg,q_auto:eco,c_fill,g_auto,w_1500,ar_1:1/k%2FPhoto%2FRecipes%2F2023-06-chicken-alfredo-pasta-reshoot%2Fchicken-alfredo-pasta-2-vertical" alt="Pasta">
+      <div class="card-content">
+        <h3>Classic Alfredo Pasta</h3>
+        <p class="price">₹299</p>
+        <p>Creamy white sauce with parmesan</p>
+      </div>
+    </div>
+
+    <div class="card drinks">
+      <img src="https://diyjoy.com/wp-content/uploads/2024/06/Sunset-Mocktail-Recipe.jpg" alt="Mocktail">
+      <div class="card-content">
+        <h3>Sunset Mocktail</h3>
+        <p class="price">₹99</p>
+        <p>Refreshing blend of orange & cranberry</p>
+      </div>
+    </div>
+
+    <div class="card drinks">
+      <img src="https://i0.wp.com/www.teacoffeecup.com/wp-content/uploads/2019/07/espresso-using-machine-scaled.jpg?fit=5110%2C3405&ssl=1" alt="Coffee">
+      <div class="card-content">
+        <h3>Espresso Shot</h3>
+        <p class="price">₹70</p>
+        <p>Bold and strong Italian espresso</p>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const filterButtons = document.querySelectorAll(".filter-btn");
+    const cards = document.querySelectorAll(".card");
+
+    filterButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        filterButtons.forEach(btn => btn.classList.remove("active"));
+        button.classList.add("active");
+
+        const category = button.dataset.category;
+        cards.forEach(card => {
+          card.style.display = (category === "all" || card.classList.contains(category)) ? "block" : "none";
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>

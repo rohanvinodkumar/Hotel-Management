@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nearby Attractions | Oceanview Hotel</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f4f4;
+    }
+
+    .back-button {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background-color: white;
+      color: #004aad;
+      padding: 10px 15px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s;
+      z-index: 1000;
+    }
+
+    .back-button:hover {
+      background-color: #e6e6e6;
+    }
+
+    .hero {
+      background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+      color: white;
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    .hero h1 {
+      font-size: 2.8rem;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+    }
+
+    .filters {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .filter-btn {
+      padding: 10px 20px;
+      margin: 5px;
+      background-color: #004aad;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 25px;
+      transition: 0.3s;
+    }
+
+    .filter-btn:hover {
+      background-color: #007bff;
+    }
+
+    .attractions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+
+    .card img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+    }
+
+    .card h3 {
+      margin: 10px;
+      font-size: 1.2em;
+    }
+
+    .card p {
+      margin: 0 10px 10px;
+      font-size: 0.95em;
+    }
+
+    .card a {
+      display: inline-block;
+      margin: 0 10px 15px;
+      color: #004aad;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .map {
+      margin: 30px 0;
+      padding: 0 20px;
+    }
+
+    iframe {
+      width: 100%;
+      height: 300px;
+      border: none;
+      border-radius: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <a href="experience.html" class="back-button">← Back</a>
+
+  <header class="hero">
+    <h1>Nearby Attractions</h1>
+    <p>Explore popular places just minutes away from Amrita</p>
+  </header>
+
+  <section class="map">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d112129.13298613392!2d77.1024907!3d28.6138954!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce2b3b1e7d6d5%3A0xb04f09e1669a9b0!2sNew%20Delhi%2C%20Delhi!5e0!3m2!1sen!2sin!4v1681306924032!5m2!1sen!2sin"
+      allowfullscreen=""
+      loading="lazy"
+    ></iframe>
+  </section>
+
+  <section class="filters">
+    <button class="filter-btn" data-category="all">All</button>
+    <button class="filter-btn" data-category="nature">Nature</button>
+    <button class="filter-btn" data-category="food">Food & Drink</button>
+    <button class="filter-btn" data-category="shopping">Shopping</button>
+    <button class="filter-btn" data-category="culture">Culture</button>
+  </section>
+
+  <section class="attractions-grid">
+    <div class="card nature">
+      <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80" alt="Beach">
+      <h3>Sunset Beach</h3>
+      <p>Relax by the ocean, just 2 km from our hotel.</p>
+    </div>
+
+    <div class="card food">
+      <img src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=800&q=80" alt="Restaurant">
+      <h3>La Luna Bistro</h3>
+      <p>Top-rated local cuisine, only 800m away.</p>
+    </div>
+
+    <div class="card culture">
+      <img src="https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=800&q=80" alt="India Gate">
+      <h3>India Gate</h3>
+      <p>A national war memorial and iconic tourist attraction in Delhi.</p>
+    </div>
+
+    <div class="card shopping">
+      <img src="https://im.whatshot.in/img/2020/Apr/phoenix-market-city-mall-whitefield-2-1586505964.jpg" alt="Phoenix Marketcity">
+      <div class="card-content">
+        <h3>Phoenix Marketcity</h3>
+        <p>One of the biggest malls in Delhi, with shopping, food court, and cinemas.</p>
+      </div>
+    </div>
+
+    <div class="card culture">
+      <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=800&q=80" alt="Museum">
+      <h3>History Museum</h3>
+      <p>Discover the region’s rich heritage and culture.</p>
+    </div>
+  </section>
+
+  <script>
+    const filterButtons = document.querySelectorAll(".filter-btn");
+    const cards = document.querySelectorAll(".card");
+
+    filterButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        const category = button.dataset.category;
+        cards.forEach(card => {
+          if (category === "all" || card.classList.contains(category)) {
+            card.style.display = "block";
+          } else {
+            card.style.display = "none";
+          }
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>

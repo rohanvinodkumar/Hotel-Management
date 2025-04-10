@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Your Stay - Amrita Hotel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <style>
+        :root {
+            --primary: #8B0000;
+            --secondary: #D4AF37;
+            --accent: #c70039;
+            --light: #FFF9F0;
+            --dark: #1A1A1A;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+        }
+
+        .booking-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .booking-progress {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .progress-step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+        }
+
+        .progress-step::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: #ddd;
+            top: 50%;
+            left: -50%;
+            z-index: -1;
+        }
+
+        .progress-step:first-child::after {
+            content: none;
+        }
+
+        .step-marker {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: #ddd;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            color: white;
+        }
+
+        .step-marker.active {
+            background: var(--primary);
+        }
+
+        .step-content {
+            display: none;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .step-content.active {
+            display: block;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .date-picker {
+            display: flex;
+            gap: 15px;
+        }
+
+        .guest-details {
+            display: flex;
+            gap: 15px;
+        }
+
+        .room-type {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .room-type label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .room-type input[type="radio"] {
+            width: 16px;
+            height: 16px;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #ddd;
+            color: var(--dark);
+        }
+
+        .back-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .back-button:hover {
+            background-color: var(--secondary);
+        }
+
+        .payment-methods {
+            margin-top: 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .payment-methods h3 {
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .payment-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .payment-option:hover {
+            background: #f8f8f8;
+        }
+
+        .payment-option.selected {
+            border-color: var(--primary);
+            background: var(--light);
+        }
+
+        .payment-option i {
+            font-size: 24px;
+        }
+
+        .payment-details {
+            display: none;
+            margin-top: 10px;
+            padding: 15px;
+            background: #f8f8f8;
+            border-radius: 5px;
+        }
+
+        .payment-details input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .room-selection-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .room-selection {
+            display: flex;
+            gap: 10px;
+            flex: 1;
+        }
+
+        .room-summary {
+            margin-top: 20px;
+        }
+
+        .summary-content {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .price-summary {
+            margin-top: 10px;
+            padding: 10px;
+            background: #f8f8f8;
+            border-radius: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .guest-details {
+                flex-direction: column;
+            }
+            
+            .button-container {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="booking-container">
+        <a href="javascript:history.back()" class="back-button">
+            <i class="fas fa-arrow-left"></i> Back
+        </a>
+        
+        <div class="booking-progress">
+            <div class="progress-step">
+                <div class="step-marker active">1</div>
+                <div>Room Selection</div>
+            </div>
+            <div class="progress-step">
+                <div class="step-marker">2</div>
+                <div>Guest Information</div>
+            </div>
+            <div class="progress-step">
+                <div class="step-marker">3</div>
+                <div>Payment</div>
+            </div>
+        </div>
+
+        
+        <div class="step-content active" id="step1">
+            <h2>Room Selection</h2>
+            
+            <div class="form-group date-picker">
+                <div>
+                    <label for="checkIn">Check-in Date</label>
+                    <input type="date" id="checkIn" required min="" onchange="validateCheckInDate()">
+                </div>
+                <div>
+                    <label for="checkOut">Check-out Date</label>
+                    <input type="date" id="checkOut" required min="" onchange="validateCheckOutDate()">
+                </div>
+            </div>
+
+            <div class="form-group guest-details">
+                <div>
+                    <label for="adults">Adults</label>
+                    <select id="adults" required>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="children">Children</label>
+                    <select id="children">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <h4>Select Your Rooms (Up to 3 rooms total)</h4>
+                <div class="room-selection-container">
+                    <div class="room-selection">
+                        <select id="roomType1" required>
+                            <option value="">Select Room Type</option>
+                            <option value="Standard Room">Standard Room</option>
+                            <option value="Hollywood Twin Room">Hollywood Twin Room</option>
+                            <option value="Deluxe Room">Deluxe Room</option>
+                            <option value="Suite Room">Suite Room</option>
+                            <option value="Penthouse Suite">Penthouse Suite</option>
+                            <option value="Family Room">Family Room</option>
+                            <option value="Connecting Room">Connecting Room</option>
+                        </select>
+                        <input type="number" id="roomQuantity1" min="1" max="3" value="1" required>
+                    </div>
+
+                    <div class="room-selection">
+                        <select id="roomType2" required>
+                            <option value="">Select Room Type</option>
+                            <option value="Standard Room">Standard Room</option>
+                            <option value="Hollywood Twin Room">Hollywood Twin Room</option>
+                            <option value="Deluxe Room">Deluxe Room</option>
+                            <option value="Suite Room">Suite Room</option>
+                            <option value="Penthouse Suite">Penthouse Suite</option>
+                            <option value="Family Room">Family Room</option>
+                            <option value="Connecting Room">Connecting Room</option>
+                        </select>
+                        <input type="number" id="roomQuantity2" min="1" max="3" value="1" required>
+                    </div>
+
+                    <div class="room-selection">
+                        <select id="roomType3" required>
+                            <option value="">Select Room Type</option>
+                            <option value="Standard Room">Standard Room</option>
+                            <option value="Hollywood Twin Room">Hollywood Twin Room</option>
+                            <option value="Deluxe Room">Deluxe Room</option>
+                            <option value="Suite Room">Suite Room</option>
+                            <option value="Penthouse Suite">Penthouse Suite</option>
+                            <option value="Family Room">Family Room</option>
+                            <option value="Connecting Room">Connecting Room</option>
+                        </select>
+                        <input type="number" id="roomQuantity3" min="1" max="3" value="1" required>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="form-group room-summary">
+                <h4>Room Selection Summary</h4>
+                <div id="roomSummary" class="summary-content">
+                    <p>No rooms selected yet</p>
+                </div>
+                <div class="price-summary">
+                    <p id="totalPrice">Total Price: ₹0</p>
+                </div>
+                <div id="roomValidation"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="specialRequests">Special Requests</label>
+                <textarea id="specialRequests" rows="3" placeholder="Any special requests or preferences?"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="amenities">Select Free Amenities</label>
+                <div class="amenities-list">
+                    <label>
+                        <input type="checkbox" name="amenities" value="wifi"> Free WiFi
+                    </label>
+                    <label>
+                        <input type="checkbox" name="amenities" value="breakfast"> Breakfast Included
+                    </label>
+                    <label>
+                        <input type="checkbox" name="amenities" value="parking"> Parking
+                    </label>
+                </div>
+            </div>
+
+            <div class="button-container">
+                <button class="btn btn-secondary" onclick="nextStep()">Next</button>
+            </div>
+        </div>
+
+        
+        <div class="step-content" id="step2">
+            <h2>Guest Information</h2>
+            
+            <div class="form-group">
+                <label for="fullName">Full Name</label>
+                <input type="text" id="name" onblur="a()" required>
+            </div>
+            <p id="a" style="color:red"></p>
+
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" onblur="b()" required>
+            </div>
+            <p id="b" style="color:red"></p>
+
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="number" id="phone" onblur="c()" required>
+            </div>
+            <p id="c" style="color:red"></p>
+
+            <div class="form-group">
+                <label for="country">Country</label>
+                <select id="country" required>
+                    <option value="">Select Country</option>
+                    <option value="india">India</option>
+                    <option value="usa">USA</option>
+                    <option value="uk">UK</option>
+                </select>
+            </div>
+
+            <div class="form-group" id="passportDetails">
+                <label for="passport">Passport Number</label>
+                <input type="number" id="passport" onblur="d()" required>
+            </div>
+            <p id="d" style="color:red"></p>
+
+            <div class="form-group">
+                <label for="specialNeeds">Special Needs or Requirements</label>
+                <textarea id="specialNeeds" rows="3" placeholder="Any special needs or requirements?"></textarea>
+            </div>
+
+            <div class="button-container">
+                <button class="btn btn-secondary" onclick="prevStep()">Previous</button>
+                <button class="btn btn-primary" onclick="nextStep()">Next</button>
+            </div>
+        </div>
+
+        <
+        <div class="step-content" id="step3">
+            <h2>Payment Details</h2>
+            
+            <div class="payment-methods">
+                <h3>Payment Methods</h3>
+                <div class="payment-options">
+                    <div class="payment-option selected" onclick="selectPaymentMethod('upi')">
+                        <i class="fas fa-mobile-alt"></i>
+                        <span>UPI</span>
+                    </div>
+                    <div class="payment-option" onclick="selectPaymentMethod('cash')">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <span>Cash</span>
+                    </div>
+                </div>
+
+                <div id="upiDetails" class="payment-details" style="display: block;">
+                    <h4>UPI Details</h4>
+                    <input type="text" id="upiId" placeholder="UPI ID" required>
+                </div>
+
+                <div id="cashDetails" class="payment-details">
+                    <h4>Cash Payment</h4>
+                    <p>You can pay in cash when you arrive at the hotel.</p>
+                </div>
+            </div>
+
+            <div class="button-container">
+                <button class="btn btn-secondary" onclick="prevStep()">Previous</button>
+                <button class="btn btn-primary" onclick="submitBooking()">Confirm Booking</button>
+            </div>
+        </div>
+            <script>
+                let selectedPaymentMethod = null;
+
+                function selectPaymentMethod(method) {
+                   
+                    const options = document.querySelectorAll('.payment-option');
+                    options.forEach(option => option.classList.remove('selected'));
+                    
+                    
+                    const selectedOption = document.querySelector(`.payment-option[onclick*="${method}"]`);
+                    selectedOption.classList.add('selected');
+                    
+                    
+                    const details = document.querySelectorAll('.payment-details');
+                    details.forEach(detail => detail.style.display = 'none');
+                    
+                   
+                    const detailDiv = document.getElementById(`${method}Details`);
+                    if (detailDiv) {
+                        detailDiv.style.display = 'block';
+                    }
+                    
+                    selectedPaymentMethod = method;
+                }
+
+               
+                selectPaymentMethod('credit');
+            </script>
+
+            <div class="button-container">
+                <button class="btn btn-secondary" onclick="prevStep()">Previous</button>
+                <button class="btn btn-primary" onclick="submitBooking()">Confirm Booking</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 1;
+
+        function nextStep() {
+            if (validateCurrentStep()) {
+                document.getElementById(`step${currentStep}`).classList.remove('active');
+                currentStep++;
+                document.getElementById(`step${currentStep}`).classList.add('active');
+                updateProgress();
+            }
+        }
+
+        function prevStep() {
+            document.getElementById(`step${currentStep}`).classList.remove('active');
+            currentStep--;
+            document.getElementById(`step${currentStep}`).classList.add('active');
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const markers = document.querySelectorAll('.step-marker');
+            markers.forEach((marker, index) => {
+                if (index < currentStep) {
+                    marker.classList.add('active');
+                } else {
+                    marker.classList.remove('active');
+                }
+            });
+        }
+
+        function validateCurrentStep() {
+            
+            if (currentStep === 1) {
+                const checkIn = document.getElementById('checkIn').value;
+                const checkOut = document.getElementById('checkOut').value;
+                if (!checkIn || !checkOut) {
+                    alert('Please select both check-in and check-out dates');
+                    return false;
+                }
+                return true;
+            } else if (currentStep === 2) {
+                const fullName = document.getElementById('fullName').value;
+                const email = document.getElementById('email').value;
+                if (!fullName || !email) {
+                    alert('Please fill in all required fields');
+                    return false;
+                }
+                return true;
+            }
+            return true;
+        }
+
+        
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('checkIn').min = today;
+        document.getElementById('checkOut').min = today;
+
+        function validateCheckInDate() {
+            const checkIn = document.getElementById('checkIn').value;
+            if (checkIn < today) {
+                alert('Check-in date cannot be in the past');
+                document.getElementById('checkIn').value = today;
+            }
+        }
+
+        function validateCheckOutDate() {
+            const checkIn = document.getElementById('checkIn').value;
+            const checkOut = document.getElementById('checkOut').value;
+            
+            if (checkOut && checkOut <= checkIn) {
+                alert('Check-out date must be after check-in date');
+                document.getElementById('checkOut').value = '';
+            }
+        }
+
+        let roomDetails = {
+            'Standard Room': {
+                description: 'Cozy & inviting space with warm lighting & modern touches. Ideal for business travelers or weekend getaways with plush bedding & thoughtful amenities for a restful night.',
+                bed: 'Queen Size',
+                price: '₹2,000 - ₹3,500'
+            },
+            'Hollywood Twin Room': {
+                description: 'Vibrant & functional space designed for sharing. These stylish rooms feature two comfortable beds with just enough personal space - perfect for friends exploring the city together!',
+                bed: 'Two Twin Beds',
+                price: '₹2,500 - ₹4,000'
+            },
+            'Deluxe Room': {
+                description: 'Step up to luxury with our spacious deluxe offering. Enjoy premium furnishings, increased space & upgraded bathroom facilities - all designed with your ultimate comfort in mind.',
+                bed: 'King Size',
+                price: '₹4,000 - ₹6,000'
+            },
+            'Suite Room': {
+                description: 'Indulge in refined elegance with separate living & sleeping areas. Our suites blend sophistication with homely comfort, featuring premium amenities & picture-perfect views.',
+                bed: 'King Size',
+                price: '₹6,000 - ₹10,000'
+            },
+            'Penthouse Suite': {
+                description: 'Experience the pinnacle of luxury atop our hotel. This exclusive space offers breathtaking panoramas, bespoke furnishings & personalized service that redefines what a hotel stay can be.',
+                bed: 'King Size',
+                price: '₹10,000 - ₹15,000'
+            },
+            'Family Room': {
+                description: 'Thoughtfully designed with families in mind. Spacious layout with two comfortable queen beds provides ample room for everyone, with family-friendly touches throughout.',
+                bed: 'Two Queen Beds',
+                price: '₹5,000 - ₹7,500'
+            },
+            'Connecting Room': {
+                description: 'Perfect balance of togetherness & privacy with two adjoining spaces linked by a private door. Ideal for families or groups wanting proximity while maintaining personal space.',
+                bed: 'King & Twin Combination',
+                price: '₹5,500 - ₹8,000'
+            }
+        };
+
+        function updateRoomSummary() {
+            const selectedRooms = [];
+            let totalPrice = 0;
+            let totalRooms = 0;
+            const checkIn = document.getElementById('checkIn').value;
+            const checkOut = document.getElementById('checkOut').value;
+            
+           
+            let days = 0;
+            if (checkIn && checkOut) {
+                const checkInDate = new Date(checkIn);
+                const checkOutDate = new Date(checkOut);
+                days = Math.ceil((checkOutDate - checkInDate) / (1000 * 60 * 60 * 24));
+            }
+
+           
+            for (let i = 1; i <= 3; i++) {
+                const roomId = `roomType${i}`;
+                const roomSelect = document.getElementById(roomId);
+                const roomType = roomSelect.value;
+                const quantity = parseInt(document.getElementById(`roomQuantity${i}`).value);
+                
+                if (roomType && quantity > 0) {
+                    const details = roomDetails[roomType];
+                    selectedRooms.push({
+                        type: roomType,
+                        quantity: quantity,
+                        price: details.price
+                    });
+                    totalRooms += quantity;
+
+                    
+                    const minPrice = parseInt(details.price.split(' - ')[0].replace(/[^0-9]/g, ''));
+                    totalPrice += minPrice * quantity * days;
+                }
+            }
+
+           
+            const validationDiv = document.getElementById('roomValidation');
+            if (totalRooms > 3) {
+                validationDiv.innerHTML = '<p class="error">Maximum total rooms allowed is 3. Please adjust your selection.</p>';
+                return;
+            } else {
+                validationDiv.innerHTML = '';
+            }
+
+            const summaryDiv = document.getElementById('roomSummary');
+            if (selectedRooms.length === 0) {
+                summaryDiv.innerHTML = '<p>No rooms selected yet</p>';
+            } else {
+                summaryDiv.innerHTML = `
+                    <ul>
+                        ${selectedRooms.map(room => `
+                            <li>${room.quantity} x ${room.type} (${room.price})</li>
+                        `).join('')}
+                    </ul>
+                    <p>Total Rooms: ${totalRooms}</p>
+                `;
+            }
+
+            document.getElementById('totalPrice').textContent = `Total Price: ₹${totalPrice.toLocaleString()}`;
+        }
+
+       
+        for (let i = 1; i <= 3; i++) {
+            document.getElementById(`roomType${i}`).addEventListener('change', function() {
+                updateRoomSummary();
+            });
+            document.getElementById(`roomQuantity${i}`).addEventListener('change', function() {
+                updateRoomSummary();
+            });
+        }
+
+       
+        document.getElementById('roomType1').value = 'Standard Room';
+        document.getElementById('roomQuantity1').value = 1;
+        updateRoomSummary();
+
+        
+        document.getElementById('country').addEventListener('change', function() {
+            const passportDiv = document.getElementById('passportDetails');
+            passportDiv.style.display = this.value !== 'india' ? 'block' : 'none';
+        });
+
+        function submitBooking() {
+            
+            alert('Booking submitted successfully!');
+        }
+    </script>
+    <script src="booking.js"></script>
+</body>
+</html>

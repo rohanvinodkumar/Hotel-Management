@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grand Haven - Spa & Wellness</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <style>
+        :root {
+            --primary: #8B0000;
+            --secondary: #D4AF37;
+            --accent: #c70039;
+            --light: #FFF9F0;
+            --dark: #1A1A1A;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            background: var(--light);
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .back-button a {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .back-button i {
+            margin-right: 0.5rem;
+        }
+
+        .hero-section {
+            height: 100vh;
+            background: linear-gradient(rgba(171, 2, 2, 0.5), rgba(0,0,0,0.5)),
+                        url('https://images.unsplash.com/photo-1574612166492-0891f957974d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            margin-top: 0;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 2rem;
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .services-section {
+            padding: 5rem 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .service-card {
+            background: var(--light);
+            border-radius: 10px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .service-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .service-card p {
+            color:#8B0000;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .service-card img {
+            width: 100%;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            object-fit: cover;
+            height: 500px;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+
+        .gallery-item .overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 1rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover .overlay {
+            opacity: 1;
+        }
+
+        .book-button {
+            background: var(--primary);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+
+        .book-button:hover {
+            background: var(--accent);
+        }
+
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            .gallery {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="back-button">
+        <a href="experience.html"><i class="fas fa-arrow-left"></i> Back to Experience</a>
+    </div>
+
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1>Spa & Wellness</h1>
+            <p>Find your inner peace in our tranquil spa, offering a range of treatments and wellness programs designed to rejuvenate your mind, body, and soul.</p>
+            <a href="#services" class="book-button">Explore Services</a>
+        </div>
+    </section>
+
+    <section class="services-section" id="services">
+        <h2>Our Services</h2>
+        
+        <div class="service-card">
+            <img src="massages.avif" alt="Massage Room">
+            <h3>Massages</h3>
+            <p>Experience our signature massages, including Swedish, Deep Tissue, and Hot Stone treatments. Each session is tailored to your specific needs and preferences.</p>
+            <ul>
+                <li>Swedish Massage</li>
+                <li>Deep Tissue Massage</li>
+                <li>Hot Stone Massage</li>
+                <li>Aromatherapy Massage</li>
+            </ul>
+        </div>
+
+        <div class="service-card">
+            <img src="facials.avif" alt="Facial Treatment">
+            <h3>Facials</h3>
+            <p>Rejuvenate your skin with our custom facials, featuring natural ingredients and advanced techniques to restore your skin's natural glow.</p>
+            <ul>
+                <li>Anti-Aging Facial</li>
+                <li>Hydrating Facial</li>
+                <li>Detox Facial</li>
+                <li>Acne Treatment Facial</li>
+            </ul>
+        </div>
+
+        <div class="service-card">
+            <img src="spaa.jpg" alt="Body Treatment">
+            <h3>Body Treatments</h3>
+            <p>Indulge in our body wraps, scrubs, and aromatherapy sessions. Each treatment is designed to detoxify and nourish your skin.</p>
+            <ul>
+                <li>Body Scrub</li>
+                <li>Body Wrap</li>
+                <li>Salt Glow Treatment</li>
+                <li>Body Polish</li>
+            </ul>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Grand Haven. All rights reserved.</p>
+    </footer>
+</body>
+</html>
